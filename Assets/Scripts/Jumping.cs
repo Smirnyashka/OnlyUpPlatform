@@ -2,19 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(Rigidbody2D))]
+
 public class Jumping : MonoBehaviour
 {
-        public float jumpForce = 5f;
-        public float maxJumpDuration = 2f;
+    private Animator _animator;
+
+        [SerializeField, Range(1,30)]private float jumpForce = 10f;
+        [SerializeField]private float maxJumpDuration = 2f;
 
         private bool isJumping = false;
         private float jumpDuration = 0f;
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
         if (Input.touchCount > 0)
         {
-            Debug.Log("touch");
             Touch touch = Input.GetTouch(0);
 
             if (touch.phase == TouchPhase.Began)
@@ -29,7 +38,12 @@ public class Jumping : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("touch");
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            StartJump();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Debug.Log("touch");
+            EndJump();
         }
     }
 
@@ -54,10 +68,12 @@ public class Jumping : MonoBehaviour
         {
             isJumping = true;
             jumpDuration = 0f;
+            _animator.SetBool("Jump", true);
         }
 
         private void EndJump()
         {
             isJumping = false;
-        }
+            _animator.SetBool("Jump", false);
+    }
 }

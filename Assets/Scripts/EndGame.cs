@@ -33,36 +33,23 @@ public class EndGame: MonoBehaviour
         cameraHeight = 2f * mainCamera.orthographicSize;
         cameraWidth = cameraHeight * mainCamera.aspect;
 
-        // Получаем ширину и высоту объекта игрока
+
         objectWidth = GetComponent<SpriteRenderer>().bounds.size.x;
         objectHeight = GetComponent<SpriteRenderer>().bounds.size.y;
     }
 
     private void LateUpdate()
     {
-        // Получаем позицию игрока
         Vector3 playerPosition = transform.position;
-
-        // Вычисляем границы камеры с учетом объекта игрока
-        // float xMin = mainCamera.transform.position.x - cameraWidth / 2f + objectWidth / 2f;
         float xMin = mainCamera.transform.position.x - cameraWidth/2f -1;
-        float xMax = mainCamera.transform.position.x + cameraWidth / 2f - objectWidth / 2f;
         float yMin = mainCamera.transform.position.y - cameraHeight / 2f + objectHeight / 2f;
-        float yMax = mainCamera.transform.position.y + cameraHeight / 2f - objectHeight / 2f;
 
-        // Ограничиваем позицию игрока в пределах границ камеры
-        //float clampedX = Mathf.Clamp(playerPosition.x, xMin, xMax);
-        //float clampedY = Mathf.Clamp(playerPosition.y, yMin, yMax);
-
-        //// Обновляем позицию игрока
-        //transform.position = new Vector3(clampedX, clampedY, playerPosition.z);
-
-        if(playerPosition.x < xMin)
+        if(playerPosition.x < xMin || playerPosition.y < yMin)
         {
-           // Debug.Log($"положение границы камеры: {xMin}");
-          //  Debug.Log($"положение границы персонажа: {playerPosition.x}");
 
             Debug.Log("game over");
+            mainCamera.backgroundColor = Color.magenta;
+
         }
 
 
