@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private int _speed;
+
     private Vector3 distance;
 
     private void FixedUpdate()
@@ -13,6 +14,4 @@ public class Movement : MonoBehaviour
 
         transform.Translate(distance);
     }
-
-
 }

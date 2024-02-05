@@ -5,15 +5,21 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int _health;
     [SerializeField] private EndGame _end;
+    [SerializeField] private DataSaver _save;
 
+    private int _health = 5;
 
     public Action OnHealthLow;
     public Action OnHealthChanged;
 
-
     public int Healthy => _health;
+
+    private void Start()
+    {
+        if(PlayerPrefs.HasKey("currentHealth"))
+        _health = _save.Load();
+    }
 
     private void OnEnable()
     {
@@ -30,12 +36,19 @@ public class Health : MonoBehaviour
     {
         if(_health <= 0)
         {
+            Debug.Log("low health");
+            _health = 5;
             OnHealthLow?.Invoke();
-            return;
         }
 
+        else 
+        { 
         _health -= 1;
         OnHealthChanged?.Invoke();
+        Debug.Log($"health - {_health}");
+        }
+
+        _save.Save(_health);
     }
 
 
