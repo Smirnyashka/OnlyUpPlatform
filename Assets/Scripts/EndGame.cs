@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
@@ -25,6 +27,8 @@ public class EndGame: MonoBehaviour
     private float objectWidth;
     private float objectHeight;
 
+    public Action OnGameEnded;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -49,6 +53,7 @@ public class EndGame: MonoBehaviour
 
             Debug.Log("game over");
             mainCamera.backgroundColor = Color.magenta;
+            OnGameEnded?.Invoke();
 
         }
 

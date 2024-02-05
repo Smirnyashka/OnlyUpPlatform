@@ -5,11 +5,11 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private int _speed;
-    private Vector2 distance;
+    private Vector3 distance;
 
     private void FixedUpdate()
     {
-        distance = Time.deltaTime * _speed * Vector2.right;
+        distance = Time.deltaTime * _speed * Vector3.right;
 
         transform.Translate(distance);
     }
