@@ -7,13 +7,19 @@ using UnityEngine;
 
 public class Jumping : MonoBehaviour
 {
+
+    [SerializeField, Range(1,30)] private float jumpForce = 10f;
+    [SerializeField] private float maxJumpDuration = 2f;
+    [SerializeField] private Transform _groundChecker;
+
     private Animator _animator;
+    private bool isJumping = false;
+    private bool CanJump=false;
+    private bool _isGrounded;
+    private float jumpDuration = 0f;
+    private float _groundCheckerRadius = 0.2f;
+    private LayerMask GroundLayer;
 
-        [SerializeField, Range(1,30)]private float jumpForce = 10f;
-        [SerializeField]private float maxJumpDuration = 2f;
-
-        private bool isJumping = false;
-        private float jumpDuration = 0f;
 
     private void Start()
     {
@@ -22,29 +28,41 @@ public class Jumping : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
+        //if (Input.touchCount > 0)
+        //{
+        //    Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Began)
+        //    if (touch.phase == TouchPhase.Began)
+        //    {
+        //        StartJump();
+        //    }
+        //    else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+        //    {
+        //        EndJump();
+        //    }
+        //}
+
+        _isGrounded = Physics2D.OverlapCircle(_groundChecker.position, _groundCheckerRadius, GroundLayer);
+
+        if(_isGrounded)
+        {
+            CanJump = true;
+            Debug.Log("hiiiiiiiii");
+        }
+
+        if (CanJump)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && isJumping == false)
             {
                 StartJump();
             }
-            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            if (Input.GetKeyUp(KeyCode.Space))
             {
                 EndJump();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("touch");
-            StartJump();
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            Debug.Log("touch");
-            EndJump();
-        }
+
+
     }
 
         private void FixedUpdate()

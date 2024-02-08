@@ -14,15 +14,8 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            mainCamera = Camera.main;
-
-            cameraHeight = 2f * mainCamera.orthographicSize;
-            cameraWidth = cameraHeight * mainCamera.aspect;
-
-            objectWidth = GetComponent<SpriteRenderer>().bounds.size.x;
-            objectHeight = GetComponent<SpriteRenderer>().bounds.size.y;
+            InitializeCamera();
         }
-
 
         public bool GameStopper()
         {
@@ -32,13 +25,21 @@ namespace Assets.Scripts
 
             if (playerPosition.x < xMin || playerPosition.y < yMin)
             {
-
-                Debug.Log("game over");
-                mainCamera.backgroundColor = Color.magenta;
                 return true;
             }
             else return false;
         }
 
-}
+
+        private void InitializeCamera()
+        {
+            mainCamera = Camera.main;
+
+            cameraHeight = 2f * mainCamera.orthographicSize;
+            cameraWidth = cameraHeight * mainCamera.aspect;
+
+            objectWidth = GetComponent<SpriteRenderer>().bounds.size.x;
+            objectHeight = GetComponent<SpriteRenderer>().bounds.size.y;
+        }
+    }
 }

@@ -5,13 +5,29 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private int _speed;
+    [SerializeField] private GameObject _text;
 
     private Vector3 distance;
 
-    private void FixedUpdate()
+    private void Start()
     {
-        distance = Time.deltaTime * _speed * Vector3.right;
+        _text.SetActive(true);
+    }
 
-        transform.Translate(distance);
+    private bool _isMoved = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _isMoved == false)
+        {
+            _isMoved = true;
+            _text.SetActive(false);
+        }
+
+        if (_isMoved) 
+        { 
+            distance = Time.deltaTime * _speed * Vector3.right;
+            transform.Translate(distance);
+        }
     }
 }
